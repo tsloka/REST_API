@@ -85,7 +85,7 @@ public class TrelloClientTest {
     @Test
     public void shouldReturnEmptyList() {
         //Given
-
+        System.gc();
         //When
         List<TrelloBoardDto> expected = trelloClient.getTrelloBoards();
         //Then
