@@ -22,15 +22,11 @@ public class EmailScheduler {
     @Autowired
     private AdminConfig adminConfig;
 
-    @Scheduled(cron = "0 0 10 * * *")
+    @Scheduled(fixedDelay = 10000)
     public void sendInformationEmail() {
         long size = taskRepository.count();
-        if (size == 1) {
-            simpleEmailService.send(new Mail(adminConfig.getAdminMail(), SUBJECT,
-                    "Currently in database you have: only one task."));
-        } else {
-            simpleEmailService.send(new Mail(adminConfig.getAdminMail(), SUBJECT,
-                    "Currently in database you have: " + size + " tasks"));
-        }
+        String taskText = size == 1 ? "only one task." : size + " tasks";
+        simpleEmailService.send(new Mail(adminConfig.getAdminMail(), SUBJECT,
+                "Currently in database you have: " + taskText));
     }
 }
