@@ -6,7 +6,6 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @EqualsAndHashCode
-@ToString
 public class TrelloCardDto {
 
     private String name;

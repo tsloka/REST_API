@@ -1,9 +1,6 @@
 package com.crud.tasks.facade;
 
-import com.crud.tasks.domain.TrelloBoard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloList;
-import com.crud.tasks.domain.TrelloListDto;
+import com.crud.tasks.domain.*;
 import com.crud.tasks.service.TrelloService;
 import com.crud.tasks.trello.facade.TrelloFacade;
 import com.crud.tasks.trello.mapper.TrelloMapper;
@@ -18,11 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TrelloFacadeTest {
+public class TrelloFacadeTestSuite {
 
     @InjectMocks
     private TrelloFacade trelloFacade;
@@ -104,9 +102,19 @@ public class TrelloFacadeTest {
     }
 
     @Test
-    public void shouldCreateCardTest(){
-        //ToDo
+    public void shouldCreateCardTest() {
+        //Given
+        TrelloCardDto trelloCardDto =
+                new TrelloCardDto("card", "description", "pos", "1");
+        CreatedTrelloCardDto createdCardDto = new CreatedTrelloCardDto("3","card","http://No.way");
+        when(trelloService.createTrelloCard(trelloCardDto)).thenReturn(createdCardDto);
+        when(trelloMapper.mapToCard(trelloCardDto)).thenReturn(new TrelloCard("","","",""));
+        when(trelloMapper.mapToCardDto(any())).thenReturn(trelloCardDto);
+        //When
+        CreatedTrelloCardDto result = trelloFacade.createCard(trelloCardDto);
+
+        //Then
+        assertEquals("card", result.getName());
+        assertEquals("3", result.getId());
     }
-
-
 }

@@ -42,16 +42,12 @@ public class TaskControllerTestSuite {
     @Test
     public void shouldReturnTasksTest() throws Exception {
         //Given
-        Task task1 = new Task(1L, "titel1", "what the hell");
-        Task task2 = new Task(2L, "titel2", "what the");
         List<Task> tasks = new LinkedList<>();
-        tasks.add(task1);
-        tasks.add(task2);
-        TaskDto taskDto1 = new TaskDto(1L, "titel1", "what the hell");
-        TaskDto taskDto2 = new TaskDto(2L, "titel2", "what the");
+        tasks.add(new Task(1L, "titel1", "what the hell"));
+        tasks.add(new Task(2L, "titel2", "what the"));
         List<TaskDto> taskDtos = new LinkedList<>();
-        taskDtos.add(taskDto1);
-        taskDtos.add(taskDto2);
+        taskDtos.add(new TaskDto(1L, "titel1", "what the hell"));
+        taskDtos.add(new TaskDto(2L, "titel2", "what the"));
 
         when(service.getAllTasks()).thenReturn(tasks);
         when(taskMapper.mapToTaskDtoList(tasks)).thenReturn(taskDtos);

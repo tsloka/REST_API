@@ -29,6 +29,4 @@ public class EmailScheduler {
         simpleEmailService.send(new Mail(adminConfig.getAdminMail(), SUBJECT,
                 "Currently in database you have: " + taskText));
     }
-
-    //ToDo test z metodą verify
 }

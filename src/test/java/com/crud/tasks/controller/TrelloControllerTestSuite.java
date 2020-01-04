@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(TrelloController.class)
-public class TrelloControllerTest {
+public class TrelloControllerTestSuite {
 
     @Autowired
     private MockMvc mockMvc;
@@ -88,7 +88,5 @@ public class TrelloControllerTest {
                 .andExpect(jsonPath("$.id", is("323")))
                 .andExpect(jsonPath("$.name", is("Test")))
                 .andExpect(jsonPath("$.shortUrl", is("http://test.com")));
-
-
     }
 }
