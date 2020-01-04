@@ -5,6 +5,7 @@ import com.crud.tasks.domain.TaskDto;
 import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.service.DbService;
 import com.google.gson.Gson;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -93,7 +95,7 @@ public class TaskControllerTestSuite {
     }
 
     @Test
-    public void updateTask() throws Exception {
+    public void shouldUpdateTask() throws Exception {
         //Given
         Task task1 = new Task(1L, "titel1", "what the hell");
         TaskDto taskDto1 = new TaskDto(1L, "titel1", "what the hell");
@@ -109,7 +111,7 @@ public class TaskControllerTestSuite {
     }
 
     @Test
-    public void createTask() throws Exception {
+    public void shouldCreateTask() throws Exception {
         //Given
         Task task1 = new Task(1L, "titel1", "what the hell");
         TaskDto taskDto1 = new TaskDto(1L, "titel1", "what the hell");
@@ -122,5 +124,22 @@ public class TaskControllerTestSuite {
         mockMvc.perform(post("/v1/task/createTask").contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8").content(jsonContent))
                 .andExpect(status().is(200));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void shouldThrowException() throws Exception {
+        //Given
+        Gson longVal = new Gson();
+        given(service.getTaskById(1L)).willAnswer(invocation -> {
+            throw new TaskNotFoundException();
+        });
+        //When & then
+        try {
+            mockMvc.perform(get("/v1/task/getTask")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .param("taskId", longVal.toJson(1L)));
+        } catch (Exception e) {
+            Assert.assertEquals(TaskNotFoundException.class, e.getClass());
+        }
     }
 }

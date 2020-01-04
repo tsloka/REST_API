@@ -36,5 +36,5 @@ public class TrelloService {
         return newCard;
     }
 
-
+    //ToDo trzy przypadki testowe (met 2 z null`em i nową kartą)
 }

@@ -7,8 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@EqualsAndHashCode
-@ToString
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TrelloListDto {
 
