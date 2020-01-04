@@ -126,7 +126,7 @@ public class TaskControllerTestSuite {
                 .andExpect(status().is(200));
     }
 
-    @Test(expected = AssertionError.class)
+    @Test
     public void shouldThrowException() throws Exception {
         //Given
         Gson longVal = new Gson();
@@ -139,7 +139,7 @@ public class TaskControllerTestSuite {
                     .contentType(MediaType.APPLICATION_JSON)
                     .param("taskId", longVal.toJson(1L)));
         } catch (Exception e) {
-            Assert.assertEquals(TaskNotFoundException.class, e.getClass());
+            Assert.assertEquals(TaskNotFoundException.class, e.getCause().getClass());
         }
     }
 }
